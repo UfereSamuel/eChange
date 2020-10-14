@@ -1,28 +1,28 @@
 package com.alc.echange.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alc.echange.OTPVerificationActivity;
 import com.alc.echange.R;
 import com.alc.echange.api.RetrofitClient;
 import com.alc.echange.model.Users;
 import com.google.android.material.textfield.TextInputEditText;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText mPhone, mPassword;
@@ -56,12 +56,10 @@ public class LoginActivity extends AppCompatActivity {
         regLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent regIntent = new Intent(getApplicationContext(), OTPVerificationActivity.class);
-                startActivity(regIntent);
+                registration();
             }
         });
     }
-
 
     public void loginUser(String phone, String password) {
         Call<Users> call = RetrofitClient
@@ -95,4 +93,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void registration() {
+        Intent regIntent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
+        startActivity(regIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
+
+

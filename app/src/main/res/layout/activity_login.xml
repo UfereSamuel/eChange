@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,169 +9,129 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
         android:layout_gravity="center"
+        android:layout_margin="30dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/user_avata"/>
+            android:src="@drawable/user_avata" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log in"
-            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
-            android:textColor="@color/colorPrimary" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Someone is waiting to be paid"
-            android:textStyle="normal"
             android:textColor="@color/colorPrimary"
-            android:layout_marginTop="5dp"/>
+            android:textStyle="normal" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:cardElevation="5dp"
-            android:outlineAmbientShadowColor="@android:color/darker_gray"
             android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/colorWhite">
+            app:cardElevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/cardview_background">
+                android:background="@drawable/cardview_background"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="horizontal">
-
-<!--                    <com.rilixtech.CountryCodePicker-->
-<!--                        android:id="@+id/ccp1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        app:ccp_defaultNameCode="NG"-->
-<!--                        app:ccp_textColor="@color/colorPrimaryDark"-->
-<!--                        app:ccp_hideNameCode="true"-->
-<!--                        app:ccp_showFlag="true"/>-->
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
                         android:layout_weight="2"
                         android:hint="Enter your phone number"
-                        android:textColorHint="@color/colorPrimary"
-                        android:layout_marginLeft="1dp">
+                        android:textColorHint="@color/colorPrimary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLoginPhone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:importantForAutofill="no"
                             android:inputType="phone"
-                            android:textColor="@color/colorPrimary"
-                            android:backgroundTint="@color/colorPrimaryDark" />
+                            android:textColor="@color/colorPrimary" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
-                <!--<view-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:background="@color/colorPrimary"/>-->
-
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter your password"
-                    android:textColorHint="@color/colorPrimary"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Enter your password"
+                    android:textColorHint="@color/colorPrimary"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
-                    android:layout_marginBottom="20dp">
+                    app:passwordToggleTint="@color/colorPrimary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:inputType="textPassword"/>
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:textColor="@color/colorPrimary" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!--<view-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginBottom="20dp"-->
-                <!--android:background="@color/colorPrimary"/>-->
-
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log in"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_login_bg"
             android:drawableEnd="@drawable/ic_back"
             android:drawablePadding="10dp"
-            android:background="@drawable/btn_login_bg"
-            android:layout_marginTop="30dp"/>
+            android:text="Log in"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/linearLayout1">
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvReg1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="New User?"-->
-<!--                android:textSize="15sp"-->
-<!--                android:textStyle="normal"-->
-<!--                android:textColor="@color/colorPrimary"-->
-<!--                android:gravity="center" />-->
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dont have an Account? Register here"
-                android:textStyle="normal"
-                android:textColor="@color/colorPrimary"
+                android:layout_marginStart="10dp"
                 android:gravity="center"
-                android:layout_marginStart="10dp"/>
+                android:text="Dont have an Account? Register here"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="normal" />
 
         </RelativeLayout>
 

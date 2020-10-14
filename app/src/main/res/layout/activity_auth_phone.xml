@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorSplashBackground"
-    tools:context=".activities.PhoneActivity">
+    tools:context=".activities.PhoneAuthActivity">
 
     <ImageView
         android:id="@+id/linear_layout"
@@ -42,11 +42,9 @@
             android:id="@+id/otpPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Phone"
             android:textSize="30sp"
             android:background="@drawable/custom_edit_text"
             android:textColor="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:inputType="phone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +56,4 @@
         android:text="Continue"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"/>
-
-
-
 </LinearLayout>

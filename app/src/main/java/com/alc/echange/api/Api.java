@@ -10,8 +10,8 @@ import retrofit2.http.POST;
 
 public interface Api {
     @FormUrlEncoded
-    @POST("user")
-    Call<ResponseBody> createUser(
+    @POST("users")
+    Call<Users> createUser(
             @Field("firstname") String firstname,
             @Field("lastname") String lastname,
             @Field("email") String email,

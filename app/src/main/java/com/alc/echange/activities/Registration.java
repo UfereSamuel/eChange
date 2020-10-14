@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.alc.echange.R;
 import com.alc.echange.api.RetrofitClient;
+import com.alc.echange.model.Users;
+import com.google.android.material.textfield.TextInputEditText;
 
 
 import org.json.JSONObject;
@@ -27,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Registration extends AppCompatActivity {
-    EditText  etFname, etLname,etEmail, etPhone, etPassword;
+    TextInputEditText etFname, etLname,etEmail, etPhone, etPassword;
     private Button btnReg;
 
     @Override
@@ -113,22 +115,21 @@ public class Registration extends AppCompatActivity {
         progressDialog.setMessage("Signing Up...");
         progressDialog.show();
 
-        Call<ResponseBody> call = RetrofitClient
+        Call<Users> call = RetrofitClient
                 .getInstance()
                 .getApi()
                 .createUser(firstname, lastname, email, phone, password);
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<Users>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Users> call, Response<Users> response) {
                 progressDialog.dismiss();
                 Intent intent = new Intent(Registration.this, LoginActivity.class);
                 startActivity(intent);
                 Toast.makeText(Registration.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
-                System.out.println("Responding ::: " + response);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Users> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(Registration.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("throwing " + t);
