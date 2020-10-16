@@ -16,7 +16,7 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.Registration" />
         <activity android:name=".activities.PhoneAuthActivity" />
-        <activity android:name=".activities.OTPVerificationActivity" />
+        <activity android:name=".OTPVerificationActivity" />
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
