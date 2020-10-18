@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText mPhone, mPassword;
     Button mLogin;
     TextView regLink;
-    ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +72,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("Calling ::" + call);
-                    System.out.println("Systems :: "+ response);
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                     startActivity(intent);
                 } else {
-                    System.out.println("Printing : " + response);
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Login failed!, Try Again", Toast.LENGTH_SHORT).show();
                 }
