@@ -30,6 +30,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.alc.echange.activities.PhoneAuthActivity.USER_PHONE_NUMBER;
+
 public class OTPVerificationActivity extends AppCompatActivity {
 
     private static final String TAG = "OTPVerificationActivity";
@@ -43,6 +45,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private Button mVerificationButton;
     private FirebaseAuth mAuth;
     private Boolean isSuccessful;
+    private String mPhoneNoReceivedViaIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,11 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
         mVerificationButton = findViewById(R.id.verify_otp);
 
+        String phoneNo = getIntent().getStringExtra(USER_PHONE_NUMBER);
+        if (phoneNo != null){
+            mPhoneNoReceivedViaIntent = phoneNo;
+            Log.i(TAG, "onCreate: Phone number received via intent is: " + mPhoneNoReceivedViaIntent);
+        }
         //Add your phone number before you run startPhoneNumberVerification()
         startPhoneNumberVerification();
 
@@ -128,7 +136,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 //
-                "",        // Phone number to verify
+                mPhoneNoReceivedViaIntent,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)

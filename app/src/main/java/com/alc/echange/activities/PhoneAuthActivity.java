@@ -13,6 +13,7 @@ import com.alc.echange.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class PhoneAuthActivity extends AppCompatActivity {
+    public static final String USER_PHONE_NUMBER = "com.alc.echange.activities.USER_PHONE_NUMBER";
     TextInputEditText mOtpPhone;
     Button mContinue;
 
@@ -34,8 +35,9 @@ public class PhoneAuthActivity extends AppCompatActivity {
                     mOtpPhone.requestFocus();
                 } else {
 
-                Intent otpIntent = new Intent(getApplicationContext(), OTPVerificationActivity.class);
-                startActivity(otpIntent);
+                    Intent otpIntent = new Intent(getApplicationContext(), OTPVerificationActivity.class);
+                    otpIntent.putExtra(USER_PHONE_NUMBER, otp);
+                    startActivity(otpIntent);
                 }
             }
         });
