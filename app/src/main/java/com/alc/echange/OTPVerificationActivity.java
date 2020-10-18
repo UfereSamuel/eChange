@@ -65,8 +65,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
         String phoneNo = getIntent().getStringExtra(USER_PHONE_NUMBER);
         if (phoneNo != null){
-            mPhoneNoReceivedViaIntent = phoneNo;
+//            mPhoneNoReceivedViaIntent = phoneNo;
+            mPhoneNoReceivedViaIntent = "+234" + phoneNo.substring(1);
             Log.i(TAG, "onCreate: Phone number received via intent is: " + mPhoneNoReceivedViaIntent);
+            Log.d("otp22", "otp: "+mPhoneNoReceivedViaIntent);
         }
         //Add your phone number before you run startPhoneNumberVerification()
         startPhoneNumberVerification();
@@ -87,6 +89,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
         public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
             //Getting the code sent by SMS
             String code = credential.getSmsCode();
+
+            Log.d("otp23", "code2: "+code);
 
             //sometime the code is not detected automatically
             //in this case the code will be null

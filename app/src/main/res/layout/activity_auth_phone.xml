@@ -28,22 +28,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:hint="Enter your password"
         android:textColorHint="@color/colorPrimary"
         android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary"
         android:layout_marginBottom="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/otpPhone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:background="@drawable/custom_edit_text"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            android:background="@android:color/transparent"
             android:textColor="@color/colorPrimary"
             android:inputType="phone"/>
 
