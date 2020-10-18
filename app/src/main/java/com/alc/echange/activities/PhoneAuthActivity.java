@@ -53,13 +53,13 @@ public class PhoneAuthActivity extends AppCompatActivity {
                     String phoneNo = "+" + mCountryCode + mobileNo.substring(1);
                     Log.i(TAG, "onClick: " + phoneNo);
 
-                    otpIntent(mobileNo);
+                    otpIntent(phoneNo);
 
                 } else if (!mobileNo.startsWith("0")){
                     String phoneNo = "+" + mCountryCode + mobileNo;
                     Log.i(TAG, "onClick: " + phoneNo);
 
-                    otpIntent(mobileNo);
+                    otpIntent(phoneNo);
                 }
             }
         });
