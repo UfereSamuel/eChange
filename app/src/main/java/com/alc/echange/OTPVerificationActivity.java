@@ -68,10 +68,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
         phoneNo = getIntent().getStringExtra(USER_PHONE_NUMBER);
         if (phoneNo != null){
-//            mPhoneNoReceivedViaIntent = phoneNo;
-            mPhoneNoReceivedViaIntent = "+234" + phoneNo.substring(1);
+            mPhoneNoReceivedViaIntent = phoneNo;
+
             Log.i(TAG, "onCreate: Phone number received via intent is: " + mPhoneNoReceivedViaIntent);
-            Log.d("otp22", "otp: "+mPhoneNoReceivedViaIntent);
+            Log.d("otp22", "otp: "+ mPhoneNoReceivedViaIntent);
         }
         //Add your phone number before you run startPhoneNumberVerification()
         startPhoneNumberVerification();

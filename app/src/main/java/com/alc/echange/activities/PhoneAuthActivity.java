@@ -4,42 +4,70 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alc.echange.OTPVerificationActivity;
 import com.alc.echange.R;
-import com.google.android.material.textfield.TextInputEditText;
+import com.hbb20.CountryCodePicker;
 
 public class PhoneAuthActivity extends AppCompatActivity {
+    private static final String TAG = "PhoneAuthActivity";
     public static final String USER_PHONE_NUMBER = "com.alc.echange.activities.USER_PHONE_NUMBER";
-    TextInputEditText mOtpPhone;
-    Button mContinue;
+    private EditText mEditTextPhoneNo;
+    private CountryCodePicker mCountryCodePicker;
+    private String mCountryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_phone);
 
-        mOtpPhone = findViewById(R.id.otpPhone);
-        mContinue = findViewById(R.id.cont);
+        mEditTextPhoneNo = findViewById(R.id.edit_text_mobile_number);
+        mCountryCodePicker = findViewById(R.id.ccp);
+
+        mCountryCode = mCountryCodePicker.getSelectedCountryCode();
+        mCountryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                mCountryCode = mCountryCodePicker.getSelectedCountryCode();
+            }
+        });
+
+        Button mContinue = findViewById(R.id.button_continue);
 
         mContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //OTP request
-                String otp = mOtpPhone.getText().toString().trim();
-                if (TextUtils.isEmpty(otp) || (!otp.startsWith("0"))) {
-                    mOtpPhone.setError("Enter Correct Phone number!");
-                    mOtpPhone.requestFocus();
-                } else {
+                String mobileNo = mEditTextPhoneNo.getText().toString().trim();
 
-                    Intent otpIntent = new Intent(getApplicationContext(), OTPVerificationActivity.class);
-                    otpIntent.putExtra(USER_PHONE_NUMBER, otp);
-                    startActivity(otpIntent);
+                if (mobileNo.isEmpty() || mobileNo.length() < 10) {
+                    mEditTextPhoneNo.setError("Valid number is required");
+                    mEditTextPhoneNo.requestFocus();
+
+                } else if (mobileNo.startsWith("0")) {
+                    String phoneNo = "+" + mCountryCode + mobileNo.substring(1);
+                    Log.i(TAG, "onClick: " + phoneNo);
+
+                    otpIntent(mobileNo);
+
+                } else if (!mobileNo.startsWith("0")){
+                    String phoneNo = "+" + mCountryCode + mobileNo;
+                    Log.i(TAG, "onClick: " + phoneNo);
+
+                    otpIntent(mobileNo);
                 }
             }
         });
+    }
+
+    private void otpIntent(String phoneNo) {
+        Intent intent = new Intent(getApplicationContext(), OTPVerificationActivity.class);
+        intent.putExtra(USER_PHONE_NUMBER, phoneNo);
+        startActivity(intent);
     }
 }
