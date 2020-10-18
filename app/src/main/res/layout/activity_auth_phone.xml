@@ -28,7 +28,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
+        android:padding="10dp"
         android:hint="Enter your password"
         android:textColorHint="@color/colorPrimary"
         android:layout_marginTop="5dp"
@@ -42,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:background="@android:color/transparent"
             android:textColor="@color/colorPrimary"
             android:inputType="phone"/>

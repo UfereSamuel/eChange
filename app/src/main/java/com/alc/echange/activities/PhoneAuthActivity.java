@@ -30,8 +30,8 @@ public class PhoneAuthActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //OTP request
                 String otp = mOtpPhone.getText().toString().trim();
-                if (TextUtils.isEmpty(otp)) {
-                    mOtpPhone.setError("Enter Phone number!");
+                if (TextUtils.isEmpty(otp) || (!otp.startsWith("0"))) {
+                    mOtpPhone.setError("Enter Correct Phone number!");
                     mOtpPhone.requestFocus();
                 } else {
 
