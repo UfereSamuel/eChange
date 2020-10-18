@@ -3,13 +3,16 @@ package com.alc.echange.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +37,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mPhone = findViewById(R.id.etLoginPhone);
+
+        mPhone.setInputType(InputType.TYPE_NULL);
+        mPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPhone.setInputType(InputType.TYPE_CLASS_NUMBER);
+                mPhone.requestFocus();
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.showSoftInput(mPhone, InputMethodManager.SHOW_FORCED);
+                mPhone.setCursorVisible(true);
+            }
+        });
+
         mPassword = findViewById(R.id.etLoginPassword);
         mLogin = findViewById(R.id.btnLogin);
         regLink = findViewById(R.id.tvReg);
