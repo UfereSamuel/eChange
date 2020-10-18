@@ -6,5 +6,25 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="good_afternoon">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">#FFFFFF</item>
+</style>
+
+    <style name="wallet_bala">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="some_id">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="fund_wallet">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
 </resources>
