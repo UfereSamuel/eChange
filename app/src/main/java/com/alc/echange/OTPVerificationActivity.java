@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alc.echange.activities.Registration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -46,6 +48,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Boolean isSuccessful;
     private String mPhoneNoReceivedViaIntent;
+    private String phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
         mVerificationButton = findViewById(R.id.verify_otp);
 
-        String phoneNo = getIntent().getStringExtra(USER_PHONE_NUMBER);
+        phoneNo = getIntent().getStringExtra(USER_PHONE_NUMBER);
         if (phoneNo != null){
 //            mPhoneNoReceivedViaIntent = phoneNo;
             mPhoneNoReceivedViaIntent = "+234" + phoneNo.substring(1);
@@ -164,6 +167,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
                             mImageCheckError.setVisibility(View.VISIBLE);
                             mVerificationButton.setText("Next");
                             progressBar.setVisibility(View.GONE);
+//                            startActivity(new Intent(OTPVerificationActivity.this, Registration.class));
+                            Intent i = new Intent(OTPVerificationActivity.this, Registration.class);
+                            i.putExtra("phoneNo", phoneNo );
+                            startActivity(i);
 
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -174,6 +181,12 @@ public class OTPVerificationActivity extends AppCompatActivity {
                                 mTextBoxTitle.setTextColor(getResources().getColor(R.color.colorRed));
                                 mImageCheckError.setImageResource(R.drawable.ic_baseline_error);
                                 mImageCheckError.setVisibility(View.VISIBLE);
+                                mEditText1.setText("");
+                                mEditText2.setText("");
+                                mEditText3.setText("");
+                                mEditText4.setText("");
+                                mEditText5.setText("");
+                                mEditText6.setText("");
                                 mVerificationButton.setText("Retry");
                                 progressBar.setVisibility(View.GONE);
                             }
