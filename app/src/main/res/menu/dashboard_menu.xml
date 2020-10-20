@@ -33,6 +33,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:orderInCategory="10"
+        android:title="@string/logout"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/more"
         android:icon="@drawable/more_menu_icon"
         android:orderInCategory="50"
