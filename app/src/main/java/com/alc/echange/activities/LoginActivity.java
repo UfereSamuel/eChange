@@ -33,9 +33,11 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
+    public static final String DASHBOARD_INTENT = "com.alc.echange.activities.LoginActivity.DASHBOARD_INTENT";
     TextInputEditText mPhone, mPassword;
     Button mLogin;
     TextView regLink;
+    //Session Management variables
     private SessionManagement sessionManagement;
     private String mPhoneNoEntered;
     private String mPasswordEntered;
@@ -45,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // [Session management logic start]
+        // [Session management variables initialize with logic start]
         sessionManagement = new SessionManagement(this);
 
         String savedPhoneNo = sessionManagement.getLoginPhoneNo();
@@ -57,13 +59,15 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordEntered = savedPassword;
 
             if (savedPhoneNo.equals(mPhoneNoEntered) && savedPassword.equals(mPasswordEntered)) {
-                startActivity(new Intent(this, DashboardActivity.class));
-            }
-            else {
+                Intent intent = new Intent(this, DashboardActivity.class);
+                intent.putExtra(DASHBOARD_INTENT, true);
+                startActivity(intent);
+                finish();
+            } else {
                 return;
             }
         }
-        // [Session management logic end]
+        // [Session management variables initialize with logic end]
 
         mPhone = findViewById(R.id.etLoginPhone);
 
@@ -93,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Fields must not be empty!", Toast.LENGTH_SHORT).show();
                 } else {
                     loginUser(mPhoneNoEntered, mPasswordEntered);
+                    //login(mPhoneNoEntered, mPasswordEntered); //used for test
                 }
             }
         });
@@ -104,6 +109,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void login(String mPhoneNoEntered, String mPasswordEntered) {
+//        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//        startActivity(intent);
+//        finish();
+//
+//        //On successful login with phone number and password, credentials will be saved
+//        sessionManagement.setLoginPhoneNo(mPhoneNoEntered);
+//        sessionManagement.setLoginPassword(mPasswordEntered);
+//    }
 
     public void loginUser(String phone, String password) {
         Call<Users> call = RetrofitClient
