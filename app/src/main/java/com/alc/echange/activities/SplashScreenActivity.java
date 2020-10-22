@@ -44,6 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                finish();
 //                Toast.makeText(SplashScreenActivity.this, "LoginActivity", Toast.LENGTH_SHORT).show();
             }
         }, TIMER);

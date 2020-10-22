@@ -72,6 +72,7 @@
                             android:backgroundTint="@color/colorPrimaryDark"
                             android:importantForAutofill="no"
                             android:inputType="phone"
+                            android:cursorVisible="false"
                             android:textColor="@color/colorPrimary" />
 
                     </com.google.android.material.textfield.TextInputLayout>
