@@ -45,6 +45,8 @@ dependencies {
     implementation 'com.github.felixsoares:BottomNavygation:1.8.6'
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.github.faranjit:currency-edittext:1.0.1'
+    implementation 'me.abhinay.input:currency-edittext:1.1'
 
     implementation 'com.hbb20:ccp:2.4.0'
 }

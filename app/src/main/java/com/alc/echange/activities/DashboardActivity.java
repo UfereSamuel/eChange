@@ -185,4 +185,19 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }
+
+    public void sendCash(View view) {
+        startActivity(new Intent(getApplicationContext(), SendCashActivity.class));
+        finish();
+    }
+
+    public void requestCash(View view) {
+        startActivity(new Intent(getApplicationContext(), RequestCashActivity.class));
+        finish();
+    }
+
+    public void airtimePurchase(View view) {
+        startActivity(new Intent(getApplicationContext(), AirtimeActivity.class));
+        finish();
+    }
 }

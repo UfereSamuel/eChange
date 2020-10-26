@@ -29,6 +29,9 @@ public class PhoneAuthActivity extends AppCompatActivity {
         mEditTextPhoneNo = findViewById(R.id.edit_text_mobile_number);
         mCountryCodePicker = findViewById(R.id.ccp);
 
+        //Default country code set to Nigeria
+        mCountryCodePicker.setCountryForPhoneCode(234);
+
         mCountryCode = mCountryCodePicker.getSelectedCountryCode();
         mCountryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
