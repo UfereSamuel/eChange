@@ -3,7 +3,7 @@
     <string name="splash_app_name_logo">e-Change</string>
     <string name="splash_text_slogan">Seamless Checkout Experience…</string>
     <string name="resend_otp"><b><u>Resend OTP</u></b></string>
-    
+
     <string name="good_afternoon">Good afternoon, Sammy</string>
     <string name="wallet_bala">Wallet balance</string>
     <string name="some_id">5000</string>
@@ -17,7 +17,11 @@
     <string name="history">History</string>
     <string name="fund_account">Fund account</string>
     <string name="home">Home</string>
+    <string name="logout">Logout</string>
     <string name="more">more</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="dialog_title_auth">Authentication required</string>
+    <string name="dialog_msg_auth"> </string>
 </resources>
