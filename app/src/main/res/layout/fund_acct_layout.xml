@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="50dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="30dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_naira"/>
+
+        <faranjit.currency.edittext.CurrencyEditText
+            android:id="@+id/etCurrency2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="number"/>
+
+
+    </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_login_bg"
+            android:text="ok"/>
+
+
+    <Button
+        android:id="@+id/btnCloseLayout"
+        android:layout_width="30dp"
+        android:layout_height="30sp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_close_black_24dp"/>
+
+</LinearLayout>

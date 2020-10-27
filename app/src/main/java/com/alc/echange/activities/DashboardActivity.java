@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Dialog;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,11 +19,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.alc.echange.R;
 
+import java.text.ParseException;
 import java.util.Objects;
+
+import faranjit.currency.edittext.CurrencyEditText;
 
 import static com.alc.echange.activities.LoginActivity.DASHBOARD_INTENT;
 
@@ -32,6 +39,9 @@ public class DashboardActivity extends AppCompatActivity {
     //Phone lock variables
     private static final int INTENT_AUTHENTICATE = 1;
     private Boolean mIsStopped, mCheckPassCode;
+    private Context context = this;
+    private static final int koboToNaira = 100;
+//    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,13 @@ public class DashboardActivity extends AppCompatActivity {
         mIsStopped = false;
         mCheckPassCode = true;
         // [Phone lock boolean variables initialize end]
+
+        findViewById(R.id.fund_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fundAccount();
+            }
+        });
 
         boolean mIntentReceived = getIntent().getBooleanExtra(DASHBOARD_INTENT, false);
         if (mIntentReceived) {
@@ -199,5 +216,63 @@ public class DashboardActivity extends AppCompatActivity {
     public void airtimePurchase(View view) {
         startActivity(new Intent(getApplicationContext(), AirtimeActivity.class));
         finish();
+    }
+
+    public void buyData(View view) {
+    }
+
+//    public void fundWallet(View view) {
+//        Toast.makeText(this, "thisss...", Toast.LENGTH_SHORT).show();
+//        fundAccount();
+//    }
+
+    private void fundAccount() {
+        Toast.makeText(this, "thisss333...", Toast.LENGTH_SHORT).show();
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.fund_acct_layout);
+        dialog.setTitle("Select a funding medium");
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+
+        final CurrencyEditText currencyEditText = dialog.findViewById(R.id.etCurrency2);
+
+                Button btnOk = dialog.findViewById(R.id.ok);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    String gateway = "Paystack";
+                    double d = currencyEditText.getCurrencyDouble();
+//                            String pay = currencyEditText.getCurrencyText().toString();
+//                            double checkMoney = Double.parseDouble(pay);
+                    int amount1 = (int) d;
+                    amount1 = amount1 * koboToNaira;
+                    Intent money = new Intent(DashboardActivity.this, Payment.class);
+                    money.putExtra("Amount", amount1 );
+                    money.putExtra("gateway", gateway);
+                    startActivity(money);
+                    Log.d("seg", ""+amount1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Button btnCloseLayout = dialog.findViewById(R.id.btnCloseLayout);
+        btnCloseLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 }

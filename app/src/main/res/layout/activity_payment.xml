@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".activities.Payment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="16dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    style="@style/bt_field_container"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical">
+
+                    <com.braintreepayments.cardform.view.SupportedCardTypesView
+                        android:id="@+id/supported_card_types"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:visibility="gone" />
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="80dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:src="@drawable/paystack_payment" />-->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.braintreepayments.cardform.view.CardForm
+                android:id="@+id/card_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+            <LinearLayout style="@style/bt_field_container">
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etEmail1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="enter a registered email"/>
+
+
+
+            <Button
+                android:id="@+id/proceed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="18dp"
+                android:background="@drawable/btn_login_bg"
+                android:text="Proceed"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/card_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

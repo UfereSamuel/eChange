@@ -110,7 +110,7 @@
             app:layout_constraintStart_toStartOf="@+id/rectangle_2"
             app:layout_constraintTop_toBottomOf="@+id/wallet_balance" />
 
-        <View
+        <Button
             android:id="@+id/fund_account"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -210,6 +210,7 @@
             android:paddingEnd="10sp"
             android:elevation="20dp"
             android:text="@string/buy_data"
+            android:onClick="buyData"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/send_cash"/>
 
