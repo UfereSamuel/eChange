@@ -28,8 +28,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.alc.echange.activities.PhoneAuthActivity.USER_PHONE_NUMBER;
+
 public class Registration extends AppCompatActivity {
     TextInputEditText etFname, etLname,etEmail, etPhone, etPassword;
+    private String phone;
     private Button btnReg;
 
     @Override
@@ -42,7 +45,7 @@ public class Registration extends AppCompatActivity {
         etFname = findViewById(R.id.etFname);
         etLname = findViewById(R.id.etLname);
         etEmail = findViewById(R.id.etEmail);
-        etPhone = findViewById(R.id.etPhone);
+        phone = getIntent().getStringExtra("phoneNo");
         etPassword = findViewById(R.id.etPassword);
 
         btnReg = findViewById(R.id.btnReg);
@@ -53,7 +56,7 @@ public class Registration extends AppCompatActivity {
                 final String firstname = etFname.getText().toString().trim();
                 final String lastname = etLname.getText().toString().trim();
                 final String email = etEmail.getText().toString().trim();
-                final String phone = etPhone.getText().toString().trim();
+//                final String phone = etPhone.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(firstname)) {
@@ -80,16 +83,16 @@ public class Registration extends AppCompatActivity {
                     etEmail.requestFocus();
                     return;
                 }
-                if (phone.isEmpty()) {
-                    etPhone.setError("Enter a Phone Number");
-                    etPhone.requestFocus();
-                    return;
-                }
-                if (phone.length() <= 10) {
-                    etPhone.setError("Enter a valid Phone number");
-                    etPhone.requestFocus();
-                    return;
-                }
+//                if (phone.isEmpty()) {
+//                    etPhone.setError("Enter a Phone Number");
+//                    etPhone.requestFocus();
+//                    return;
+//                }
+//                if (phone.length() <= 10) {
+//                    etPhone.setError("Enter a valid Phone number");
+//                    etPhone.requestFocus();
+//                    return;
+//                }
 
                 if (TextUtils.isEmpty(password)) {
                     etPassword.setError("Password is required");
