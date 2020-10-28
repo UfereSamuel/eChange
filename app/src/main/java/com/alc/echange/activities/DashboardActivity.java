@@ -1,13 +1,18 @@
 package com.alc.echange.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.KeyguardManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,48 +20,134 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alc.echange.R;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawer;
-    NavigationView navigationView;
+import static com.alc.echange.activities.LoginActivity.DASHBOARD_INTENT;
+
+public class DashboardActivity extends AppCompatActivity {
+    private static final String TAG = "DashboardActivity";
+    private ConstraintLayout mMainContainer;
+
+    //Phone lock variables
+    private static final int INTENT_AUTHENTICATE = 1;
+    private Boolean mIsStopped, mCheckPassCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        Toolbar toolbar = findViewById(R.id.bottom_toolbar);
+        
+            Toolbar toolbar = findViewById(R.id.bottom_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        if (drawer != null) {
-            drawer.addDrawerListener(toggle);
-        }
-        toggle.syncState();
+        mMainContainer = findViewById(R.id.main_container);
 
-        navigationView = findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
+        // [Phone lock boolean variables initialize ]
+        mIsStopped = false;
+        mCheckPassCode = true;
+        // [Phone lock boolean variables initialize end]
+
+        boolean mIntentReceived = getIntent().getBooleanExtra(DASHBOARD_INTENT, false);
+        if (mIntentReceived) {
+            //Prompt user to unlock screen
+            promptUnlockScreen();
         }
     }
 
+    //Activity on background
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer != null) {
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: called");
+        mIsStopped = true;
+    }
+
+    //Activity on foreground
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus)
+            Log.i(TAG, "onWindowFocusChanged: hasFocus is " + hasFocus);
+
+        if (mIsStopped && mCheckPassCode) {
+            mCheckPassCode = false;
+            //Prompt user to unlock screen
+            promptUnlockScreen();
+        }
+    }
+
+    private void promptUnlockScreen() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+
+            if (km.isKeyguardSecure()) {
+                mCheckPassCode = false;
+
+                km.inKeyguardRestrictedInputMode();
+                Intent authIntent = km.createConfirmDeviceCredentialIntent(getString(R.string.dialog_title_auth), getString(R.string.dialog_msg_auth));
+                startActivityForResult(authIntent, INTENT_AUTHENTICATE);
+
             } else {
-                super.onBackPressed();
+                //Handling a phone without a passCode
+                mCheckPassCode = true;
             }
         }
+    }
+
+
+    // call back when password is correct or cancel/avoided
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == INTENT_AUTHENTICATE) {
+            if (resultCode == RESULT_OK) {
+                //do something you want when pass the security
+                mMainContainer.setVisibility(View.VISIBLE);
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                finish();
+            } else{
+                onBackPressed();
+            }
+        }
+    }
+
+    // Check if back button is pressed
+    @Override
+    public void onBackPressed() {
+
+        if (!mCheckPassCode) { //back button pressed when user tries to cancel/avoid security check.
+            mCheckPassCode = true;
+            //For security reason app UI is invisible
+            mMainContainer.setVisibility(View.INVISIBLE);
+        }
+
+        exitOnBackPressed();
+    }
+
+    private void exitOnBackPressed() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -78,69 +169,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             case R.id.fund_account:
                 Toast.makeText(this, "This is the fund account menu", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.logout:
+                logout();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.home));
-                return true;
-            case R.id.request_cash:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.request_cas));
-                return true;
-            case R.id.send_cash:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.send_cash));
-                return true;
-            case R.id.buy_airtime:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.buy_airtime));
-                return true;
-            case R.id.buy_data:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.buy_data));
-                return true;
-            case R.id.pay_with_qr:
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.pay_with_qr));
-                return true;
-            default:
-                return false;
-        }
-
-    }
-
-    public void displayToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void payWithQr(View view) {
-        displayToast("Pay with QR here");
-    }
-
-    public void buyData(View view) {
-        displayToast("Buy Data here");
-    }
-
-    public void buyAirtime(View view) {
-        displayToast("Buy Airtime here");
-    }
-
-    public void sendCash(View view) {
-        displayToast("Send cash here");
-    }
-
-    public void requestCash(View view) {
-        displayToast("Request cash here");
-    }
-
-    public void fundAccount(View view) {
-        displayToast("Fund account here");
+    private void logout() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.apply();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
     }
 }
