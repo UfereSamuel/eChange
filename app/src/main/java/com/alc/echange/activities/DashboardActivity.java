@@ -1,10 +1,13 @@
 package com.alc.echange.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.KeyguardManager;
 import android.content.DialogInterface;
@@ -20,14 +23,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alc.echange.R;
+import com.google.android.material.navigation.NavigationView;
+
 
 import java.util.Objects;
 
 import static com.alc.echange.activities.LoginActivity.DASHBOARD_INTENT;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "DashboardActivity";
     private ConstraintLayout mMainContainer;
+    DrawerLayout drawer;
+    NavigationView navigationView;
 
     //Phone lock variables
     private static final int INTENT_AUTHENTICATE = 1;
@@ -38,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         
-            Toolbar toolbar = findViewById(R.id.bottom_toolbar);
+        Toolbar toolbar = findViewById(R.id.bottom_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -54,7 +61,22 @@ public class DashboardActivity extends AppCompatActivity {
             //Prompt user to unlock screen
             promptUnlockScreen();
         }
+
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        this, drawer, toolbar, R.string.navigation_drawer_open,
+        R.string.navigation_drawer_close);
+        if (drawer != null) {
+        drawer.addDrawerListener(toggle);
+        }
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        if (navigationView != null) {
+        navigationView.setNavigationItemSelectedListener(this);
+        }
     }
+
 
     //Activity on background
     @Override
@@ -184,5 +206,15 @@ public class DashboardActivity extends AppCompatActivity {
         editor.apply();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    public void requestCash(View view) {
+        Intent intent = new Intent(this, RequestCashActivity.class);
+        startActivity(intent);
     }
 }
