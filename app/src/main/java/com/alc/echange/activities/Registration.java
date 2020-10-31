@@ -125,6 +125,7 @@ public class Registration extends AppCompatActivity {
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
+                Log.d("succ2", response.toString());
                 progressDialog.dismiss();
                 Intent intent = new Intent(Registration.this, LoginActivity.class);
                 startActivity(intent);

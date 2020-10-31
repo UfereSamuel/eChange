@@ -8,16 +8,18 @@ public class Users implements Serializable {
     private String email;
     private String phone;
     private String password;
+    private int balance;
 
     public Users() {
     }
 
-    public Users(String firstname, String lastname, String email, String phone,  String password) {
+    public Users(String firstname, String lastname, String email, String phone,  String password, int balance) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.balance = balance;
     }
 
     public String getFirstname() {
@@ -58,5 +60,13 @@ public class Users implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

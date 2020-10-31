@@ -21,9 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alc.echange.R;
+import com.alc.echange.model.Users;
+import com.alc.echange.utils.Util;
 
 import java.text.ParseException;
 import java.util.Objects;
@@ -42,6 +45,13 @@ public class DashboardActivity extends AppCompatActivity {
     private Context context = this;
     private static final int koboToNaira = 100;
 //    private Dialog dialog;
+private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    public static String PREFS_NAME = "app";
+    private TextView tvAmount;
+    private Users model;
+    private int amount;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,19 @@ public class DashboardActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         mMainContainer = findViewById(R.id.main_container);
+
+        model = new Users();
+
+        amount = model.getBalance();
+        email = model.getEmail();
+
+
+
+        preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        editor = preferences.edit();
+
+        tvAmount = findViewById(R.id.some_id);
+        tvAmount.setText(""+amount);
 
         // [Phone lock boolean variables initialize ]
         mIsStopped = false;

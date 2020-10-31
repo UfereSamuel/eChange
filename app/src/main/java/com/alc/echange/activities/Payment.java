@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alc.echange.R;
+import com.alc.echange.model.Users;
 import com.braintreepayments.cardform.OnCardFormSubmitListener;
 import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.CardEditText;
@@ -52,6 +53,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
     private EditText expiryYearField;
     private EditText cvvField;
 
+//    private String email;
+
     private ProgressDialog dialog;
 
     //    private String email, cardNumber, cvv;
@@ -63,6 +66,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
     private String paystack_public_key = "pk_test_cd59f81cce67a108d7452525f800aeb3eeb27f4c";
 
     private AppCompatActivity activity = Payment.this;
+
+    private Users model;
 
 
     private EditText mPaymentDescription;
@@ -99,6 +104,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
     private double pay;
     private int paying;
 
+    private String transactionReference;
+
     private Bundle bundle;
     private KProgressHUD hud;
     private SweetAlertDialog pDialog;
@@ -109,6 +116,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
         setContentView(R.layout.activity_payment);
 
         hud = KProgressHUD.create(this);
+
+        model = new Users();
 
         //initialize sdk
         PaystackSdk.initialize(getApplicationContext());
@@ -123,6 +132,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
 
         mTextError = findViewById(R.id.card_error);
         mEmail = findViewById(R.id.etEmail1);
+
+//        email = model.getEmail();
 
         mCardForm = findViewById(R.id.card_form);
         mCardForm.cardRequired(true)
@@ -220,6 +231,7 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
                 Log.d("pay2", ""+amount);
 
                 email = mEmail.getText().toString();
+//                email = model.getEmail();
 //                gateway = "paystack";
 
                 charge.setAmount(newAmount);
@@ -269,7 +281,9 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
                         Log.d("chargeCard5", ""+email);
                         Log.d("chargeCard3", ""+transaction.getReference().toString());
                         Log.d("chargeCard4", ""+transaction.getClass().toString());
+                        transactionReference = transaction.getReference().toString();
 //                        PostPayment(account_number, amount, gateway, transaction_code);
+                        postPayment();
                         updateTextViews();
                     }
 
@@ -328,6 +342,9 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
                     }
 
                 });
+    }
+
+    private void postPayment() {
     }
 
     private void updateTextViews() {
